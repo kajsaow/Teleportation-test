@@ -1,8 +1,8 @@
 Player player;
 
 boolean wPressed, sPressed, aPressed, dPressed;
-boolean mouseButtonClik;
-float runTime;
+boolean mouseButtonPressed;
+int runTime;
 
 void setup() {
   size(600,600);
@@ -16,8 +16,10 @@ void setup() {
 }
 void draw() {
   background(150, 130, 150);
+
   player.update();
-  player.teleport();
+ 
+
 }
 
 void keyPressed() {
@@ -51,10 +53,10 @@ void keyReleased() {
 }
 
 void mousePressed() {
-  mouseButtonClik = true;
+  mouseButtonPressed = true;
 }
 void mouseReleased() {
-  mouseButtonClik = false;
+  mouseButtonPressed = false;
 }
 
 

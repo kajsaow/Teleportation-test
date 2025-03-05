@@ -2,10 +2,12 @@ class Player {
   float xpos, ypos;
   float xSpeed, ySpeed;
   float playerSize;
+  
   float teleportDestinationX, teleportDestinationY;
 
   int teleportStartTime;
   int teleportCircleSize;
+  int teleportDelay;
 
   boolean teleporting;
 
@@ -23,9 +25,11 @@ class Player {
     teleportCircleSize = 100;
 
     teleporting = false;
+    teleportDelay = 1000;
 
     teleportDestinationX = 0;
     teleportDestinationY = 0;
+    
   }
 
 
@@ -64,6 +68,7 @@ class Player {
   void update() {
     move();
     display();
+    teleport();
   }
 
   void display() {
@@ -77,34 +82,35 @@ class Player {
   }
 
   void teleport() {
-    if (mouseButtonClik) {
+    if (mouseButtonPressed) {
       teleportStartTime = millis();
 
       teleporting = true;
 
       teleportDestinationX = mouseX;
       teleportDestinationY = mouseY;
-     
     }
-     if (teleporting) {
+    if (teleporting) {
+
+      fill(#F0F27A);
+      ellipse(teleportDestinationX, teleportDestinationY, teleportCircleSize, teleportCircleSize);
+      teleportCircleSize -= (teleportDelay/1000);
+    }
+    if (millis() - teleportStartTime > teleportDelay & teleporting == true) {
       
-        fill(#F0F27A);
-        ellipse(teleportDestinationX, teleportDestinationY, teleportCircleSize, teleportCircleSize);
-        teleportCircleSize -=1;
-      }
-    if (millis() - teleportStartTime > 1000 & teleporting == true) {
       xpos = teleportDestinationX;
       ypos = teleportDestinationY;
+      
       teleporting = false;
       teleportCircleSize = 100;
-     
     }
 
 
-    //text("Coordinates for teleportation:"  tempMouseX "," tempMouseY, 100, 200);
 
-    println("Teleport Start Time", teleportStartTime);
-    println("Teleport delay", millis() - teleportStartTime);
-    println("Teleporting", mouseButtonClik);
+
+    println("Teleport Start Time:", teleportStartTime,"ms");
+    println("Teleport delay:", millis() - teleportStartTime,"ms");
+    println("Mouse button pressed", mouseButtonPressed);
+    println();
   }
 }
